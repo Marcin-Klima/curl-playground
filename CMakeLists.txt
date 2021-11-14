@@ -8,9 +8,12 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-find_package(CURL REQUIRED)
-if(CURL_FOUND)
-    message(STATUS "CURL FOUND")
+if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+    include(conanfiles/release/conanbuildinfo.cmake)
+else()
+    include(conanfiles/debug/conanbuildinfo.cmake)
 endif()
+
+conan_basic_setup()
 
 add_subdirectory(src)
